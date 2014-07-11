@@ -200,9 +200,24 @@ unsigned short L1RCTParameters::calcIAbsEta(unsigned short iCrate, unsigned shor
 
 float L1RCTParameters::JetMETTPGSum(const float& ecal, const float& hcal, const unsigned& iAbsEta) const
 {
-  float ecal_c = ecal*jetMETECalScaleFactors_.at(iAbsEta-1);
+	float et= ecal;
+	int etbin;
+
+	if(et<10){etbin=0;}
+	else if(et<15){etbin=1;}
+	else if(et<20){etbin=2;}
+	else if(et<25){etbin=3;}
+	else if(et<30){etbin=4;}
+	else if(et<35){etbin=5;}
+	else if(et<40){etbin=6;}
+	else if(et<45){etbin=7;}
+	else {etbin=8;}
+
+ 
+  float ecal_c = ecal*jetMETECalScaleFactors_.at(etbin*28+iAbsEta-1);
   float hcal_c = hcal*jetMETHCalScaleFactors_.at(iAbsEta-1);
   float result = ecal_c + hcal_c;
+  if(ecal>0 || hcal>0){ std::cout<<"CondFormats "<<"hcal= "<<hcal<<"; ecal= "<<ecal<<"; etbin= "<<etbin<<"; SF(hcal)= "<<jetMETHCalScaleFactors_.at(iAbsEta-1)<<"; SF(ecal)= "<<jetMETECalScaleFactors_.at(etbin*28+iAbsEta-1)<<"; hcal_c= "<<hcal_c<<"; ecal_c= "<<ecal_c<<std::endl;}
 
   if(useCorrections_)
     {
@@ -220,10 +235,26 @@ float L1RCTParameters::JetMETTPGSum(const float& ecal, const float& hcal, const 
 
 float L1RCTParameters::EGammaTPGSum(const float& ecal, const float& hcal, const unsigned& iAbsEta) const
 {
-  float ecal_c = ecal*eGammaECalScaleFactors_.at(iAbsEta-1);
-  float hcal_c = hcal*eGammaHCalScaleFactors_.at(iAbsEta-1);
+	float et= ecal;
+	int etbin;
+
+	if(et<10){etbin=0;}
+	else if(et<15){etbin=1;}
+	else if(et<20){etbin=2;}
+	else if(et<25){etbin=3;}
+	else if(et<30){etbin=4;}
+	else if(et<35){etbin=5;}
+	else if(et<40){etbin=6;}
+	else if(et<45){etbin=7;}
+	else {etbin=8;}
+	
+  float ecal_c = ecal*eGammaECalScaleFactors_.at(etbin*28+iAbsEta-1);
+  float hcal_c = hcal*eGammaHCalScaleFactors_.at(iAbsEta-1); //Currently not used?
   float result = ecal_c + hcal_c;
 
+//  if(ecal>0 || hcal>0){ std::cout<<"hcal= "<<hcal<<"ecal= "<<ecal<<"; etbin= "<<etbin<<"; SF(hcal)= "<<jetMETHCalScaleFactors_.at(iAbsEta-1)<<"; SF(ecal)= "<<jetMETECalScaleFactors_.at(etbin*28+iAbsEta-1)<<"; hcal_c= "<<hcal_c<<"; ecal_c= "<<ecal_c<<std::endl;}
+  //
+  //Lindsey's
   if(useCorrections_)
     {
       if(eGammaHCalScaleFactors_.at(iAbsEta-1) != 0)
