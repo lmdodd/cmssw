@@ -200,24 +200,37 @@ unsigned short L1RCTParameters::calcIAbsEta(unsigned short iCrate, unsigned shor
 
 float L1RCTParameters::JetMETTPGSum(const float& ecal, const float& hcal, const unsigned& iAbsEta) const
 {
-	float et= ecal;
-	int etbin;
+	float ete= ecal;
+	int etebin;
 
-	if(et<10){etbin=0;}
-	else if(et<15){etbin=1;}
-	else if(et<20){etbin=2;}
-	else if(et<25){etbin=3;}
-	else if(et<30){etbin=4;}
-	else if(et<35){etbin=5;}
-	else if(et<40){etbin=6;}
-	else if(et<45){etbin=7;}
-	else {etbin=8;}
+	if(ete<10){etebin=0;}
+	else if(ete<15){etebin=1;}
+	else if(ete<20){etebin=2;}
+	else if(ete<25){etebin=3;}
+	else if(ete<30){etebin=4;}
+	else if(ete<35){etebin=5;}
+	else if(ete<40){etebin=6;}
+	else if(ete<45){etebin=7;}
+	else {etebin=8;}
+
+	float eth= ecal;
+	int ethbin;
+
+	if(eth<10){ethbin=0;}
+	else if(eth<15){ethbin=1;}
+	else if(eth<20){ethbin=2;}
+	else if(eth<25){ethbin=3;}
+	else if(eth<30){ethbin=4;}
+	else if(eth<35){ethbin=5;}
+	else if(eth<40){ethbin=6;}
+	else if(eth<45){ethbin=7;}
+	else {ethbin=8;}
 
  
-  float ecal_c = ecal*jetMETECalScaleFactors_.at(etbin*28+iAbsEta-1);
-  float hcal_c = hcal*jetMETHCalScaleFactors_.at(iAbsEta-1);
+  float ecal_c = ecal*jetMETECalScaleFactors_.at(etebin*28+iAbsEta-1);
+  float hcal_c = hcal*jetMETHCalScaleFactors_.at(ethbin*28+iAbsEta-1);
   float result = ecal_c + hcal_c;
-  if(ecal>0 || hcal>0){ std::cout<<"CondFormats "<<"hcal= "<<hcal<<"; ecal= "<<ecal<<"; etbin= "<<etbin<<"; SF(hcal)= "<<jetMETHCalScaleFactors_.at(iAbsEta-1)<<"; SF(ecal)= "<<jetMETECalScaleFactors_.at(etbin*28+iAbsEta-1)<<"; hcal_c= "<<hcal_c<<"; ecal_c= "<<ecal_c<<std::endl;}
+ // if(ecal>0 || hcal>0){ std::cout<<"CondFormats "<<"hcal= "<<hcal<<"; ecal= "<<ecal<<"; etbin= "<<etbin<<"; SF(hcal)= "<<jetMETHCalScaleFactors_.at(iAbsEta-1)<<"; SF(ecal)= "<<jetMETECalScaleFactors_.at(etbin*28+iAbsEta-1)<<"; hcal_c= "<<hcal_c<<"; ecal_c= "<<ecal_c<<std::endl;}
 
   if(useCorrections_)
     {
