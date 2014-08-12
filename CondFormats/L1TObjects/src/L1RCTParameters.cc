@@ -213,7 +213,7 @@ float L1RCTParameters::JetMETTPGSum(const float& ecal, const float& hcal, const 
 	else if(ete<45){etebin=7;}
 	else {etebin=8;}
 
-	float eth= ecal;
+	float eth= hcal;
 	int ethbin;
 
 	if(eth<10){ethbin=0;}
